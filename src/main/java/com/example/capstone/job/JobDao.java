@@ -1,7 +1,7 @@
 package com.example.capstone.job;
 
 import com.example.capstone.job.model.entity.Job;
-import com.example.capstone.job.model.entity.Application;
+import com.example.capstone.job.model.response.GetApplicationRes;
 import com.example.capstone.user.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -78,7 +78,8 @@ public class JobDao {
         for(Job job:jobListFilteredByAge){
             int jobGender=job.getJobGender();
             double dist= distance(job.getJobLat(),job.getJobLng(),user.getUser_lat(),user.getUser_lng());
-            if(userGender==jobGender||jobGender==2){ //user의 성별과 공고의 성별이 같거나, 공고가 성별 무관인 경우에 필터링 ok
+            if(userGender==jobGender||jobGender==2){
+                //user의 성별과 공고의 성별이 같거나, 공고가 성별 무관인 경우에 필터링 ok
             if(dist<=30){
                 jobList.add(getJob(job.getJobIdx()));
             }}
@@ -144,7 +145,7 @@ public class JobDao {
 
 
 
-    public Application getApplication(int userIdx) {
+    public GetApplicationRes getApplication(int userIdx) {
         List<String> jobCateList = getListByQuery(userIdx,
                 "select job_category_name from user_job_category ujc inner join job_category jc on ujc.job_category_idx=jc.job_category_idx where user_idx=?");
 
@@ -164,8 +165,8 @@ public class JobDao {
 
         String user_gender="";
         switch (user.getUser_gender()){
-            case 1: user_gender="남성";
-            case 2: user_gender="여성";
+            case 0: user_gender="남성";
+            case 1: user_gender="여성";
         }
 
         String user_drive_status="";
@@ -174,8 +175,8 @@ public class JobDao {
             case 1: user_drive_status="가능";
         }
 
-        return new Application(user.getUser_name(),user.getUser_birth(),user_age,user_gender,user.getUser_phone(),
-                user_drive_status,user.getUser_exprience(),user.getUser_exprience(),jobCateList);
+        return new GetApplicationRes(user.getUser_name(),user.getUser_birth(),user_age,user_gender,user.getUser_phone(),
+                user_drive_status,user.getUser_experience(),user.getUser_profile_img(),jobCateList);
     }
 
     private List<String> getListByQuery(int user_idx, String s) {
@@ -202,18 +203,22 @@ public class JobDao {
     
 
 
-    public List<Application> getApplicants(int jobIdx) {
+    public List<GetApplicationRes> getApplicants(int jobIdx) {
         String applicantIdxListQuery="select user_idx from user_job_apply where job_idx=?";
         List<Integer> applicantIdxList=this.jdbcTemplate.query(applicantIdxListQuery,
                 (rs,rowNum)->rs.getInt(1),jobIdx);
 
-        List<Application> applicationList=new ArrayList<>();
+        List<GetApplicationRes> getApplicationResList =new ArrayList<>();
         for(Integer idx:applicantIdxList){
-            Application app=getApplication(idx);
-            applicationList.add(app);
+            GetApplicationRes app=getApplication(idx);
+            getApplicationResList.add(app);
         }
-        return applicationList;
+        return getApplicationResList;
     }
 
 
+    public int checkPublisherStatus(int jobIdx) {
+        String checkQuery="select job_publisher_idx from job where job_idx=?";
+        return this.jdbcTemplate.queryForObject(checkQuery,int.class,jobIdx);
+    }
 }

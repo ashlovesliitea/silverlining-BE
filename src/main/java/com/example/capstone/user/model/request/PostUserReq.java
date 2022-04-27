@@ -20,7 +20,7 @@ public class PostUserReq {
     private Integer user_gender;
     private String user_phone;
     private Integer user_company_status;
-    private String user_exprience;
+    private String user_experience;
     private Integer user_drive_status;
     private String user_siNm;
     private String user_sggNm;

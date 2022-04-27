@@ -20,7 +20,7 @@ public class User {
     private Integer user_gender;
     private String user_phone;
     private Integer user_company_status;
-    private String user_exprience;
+    private String user_experience;
     private Integer user_drive_status;
     private String user_siNm;
     private String user_sggNm;
@@ -55,7 +55,7 @@ public class User {
         this.user_gender=user_gender;
         this.user_phone=user_phone;
         this.user_drive_status=user_drive_status;
-        this.user_exprience=user_exprience;
+        this.user_experience=user_exprience;
         this.user_profile_img=user_profile_img;
 
     }

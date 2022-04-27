@@ -1,4 +1,4 @@
-package com.example.capstone.job.model.entity;
+package com.example.capstone.job.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Application {
+public class GetApplicationRes {
     private String user_name;
     private Date user_birth;
     private Integer user_age;

@@ -1,7 +1,7 @@
 package com.example.capstone.job;
 
 import com.example.capstone.job.model.entity.Job;
-import com.example.capstone.job.model.entity.Application;
+import com.example.capstone.job.model.response.GetApplicationRes;
 import com.example.capstone.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,7 +52,7 @@ public class JobService {
         return jobDao.getJobList();
     }
 
-    public Application getResume(int userIdx) {
+    public GetApplicationRes getResume(int userIdx) {
         return jobDao.getApplication(userIdx);
     }
 
@@ -64,7 +64,11 @@ public class JobService {
         return jobDao.checkApplyStatus(userIdx,jobIdx);
     }
 
-    public List<Application> getApplicants(int jobIdx) {
+    public List<GetApplicationRes> getApplicants(int jobIdx) {
         return jobDao.getApplicants(jobIdx);
+    }
+
+    public int checkPublisherStatus(int jobIdx) {
+        return jobDao.checkPublisherStatus(jobIdx);
     }
 }

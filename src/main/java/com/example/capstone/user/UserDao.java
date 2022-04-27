@@ -37,11 +37,12 @@ public class UserDao {
 
     public int createUser(User user) {
         String createUserQuery="insert into user(user_idx,user_id,user_pw,user_name,user_birth,user_gender,user_phone,user_company_status,user_experience,user_drive_status," +
-                "user_siNm,user_sggNm,user_emdNm,user_streetNm,user_detailNm,user_lat,user_lng,user_insurance_status,user_median_income,user_profile_img) Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "user_siNm,user_sggNm,user_emdNm,user_streetNm,user_detailNm,user_lat,user_lng,user_insurance_status,user_guardian_phone,user_median_income,user_profile_img) " +
+                "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         Object[] createUserParams={user.getUser_idx(),user.getUser_id(),user.getUser_pw(),user.getUser_name(),user.getUser_birth(),user.getUser_gender(),user.getUser_phone(),user.getUser_company_status(),
-        user.getUser_exprience(),user.getUser_drive_status(),user.getUser_siNm(),user.getUser_sggNm(),user.getUser_emdNm(),user.getUser_streetNm(),user.getUser_detailNm(),
-        user.getUser_lat(),user.getUser_lng(),user.getUser_insurance_status(),user.getUser_median_income(),user.getUser_profile_img()};
+        user.getUser_experience(),user.getUser_drive_status(),user.getUser_siNm(),user.getUser_sggNm(),user.getUser_emdNm(),user.getUser_streetNm(),user.getUser_detailNm(),
+        user.getUser_lat(),user.getUser_lng(),user.getUser_insurance_status(),user.getUser_guardian_phone(),user.getUser_median_income(),user.getUser_profile_img()};
 
         this.jdbcTemplate.update(createUserQuery,createUserParams);
 
@@ -133,13 +134,13 @@ public class UserDao {
     }
 
     public List<GetApplyRes> findMyApplications(int userIdx) {
-        String jobIdxListQuery="select user_job_idx,uja.job_idx,job_title from user_job_apply uja" +
+        String jobIdxListQuery="select user_job_idx,uja.job_idx,job_title from user_job_apply uja " +
                 "inner join job on job.job_idx=uja.job_idx where user_idx=?";
         return this.jdbcTemplate.query(jobIdxListQuery,
                 (rs,rowNum)->new GetApplyRes(
                         rs.getInt(1),
-                        rs.getInt(2),
                         userIdx,
+                        rs.getInt(2),
                         rs.getString(3)
                 ),userIdx);
 

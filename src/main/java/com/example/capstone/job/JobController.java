@@ -6,7 +6,7 @@ import com.example.capstone.config.ResponseObj;
 import com.example.capstone.config.ResponseStatusCode;
 import com.example.capstone.config.annotation.NoAuth;
 import com.example.capstone.job.model.entity.Job;
-import com.example.capstone.job.model.entity.Application;
+import com.example.capstone.job.model.response.GetApplicationRes;
 import com.example.capstone.job.model.request.PostJobReq;
 import com.example.capstone.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class JobController {
         Job newJob=new Job(jobIdx+1,postJobReq.getJobTitle(),postJobReq.getCompanyName(),postJobReq.getJobCategoryId(),postJobReq.getJobMinAge(),postJobReq.getJobMaxAge(),
                 postJobReq.getJobGender(),postJobReq.getJobWage(),postJobReq.getJobWorkingTime(),postJobReq.getJobPersonnel(),postJobReq.getJobDetail(),postJobReq.getJobOfferStatus(),
                 postJobReq.getJobSinm(),postJobReq.getJobSggnm(),postJobReq.getJobEmdnm(),postJobReq.getJobStreetnm(),postJobReq.getJobDetailnm(), postJobReq.getJobLat(), postJobReq.getJobLng(),
-                postJobReq.getJobPublisherIdx());
+                userIdx);
 
         int jobCreatedStatus=jobService.createJob(newJob);
 
@@ -55,6 +55,7 @@ public class JobController {
 
     }
 
+    //Entity 클래스 Job을 GetJobRes로 바꾸도록 하기
     @NoAuth
     @ResponseBody
     @GetMapping("/{jobIdx}")
@@ -71,7 +72,7 @@ public class JobController {
 
         if(userNum!=null){
             //유저 정보로 필터링한 공고
-            System.out.println(" user= " +userNum);
+            System.out.println("user= " +userNum);
             List<Job> jobListFilteredByUser= jobService.getJobByUser(userNum);
             return new ResponseObj<>(jobListFilteredByUser);
         }
@@ -100,12 +101,12 @@ public class JobController {
     //유저가 제출할 지원서 정보 확인 API
     @ResponseBody
     @GetMapping("/{jobIdx}/application")
-    public ResponseObj<Application> getApplication(HttpServletRequest request,
-                                              @PathVariable("jobIdx")int jobIdx){
+    public ResponseObj<GetApplicationRes> getApplication(HttpServletRequest request,
+                                                         @PathVariable("jobIdx")int jobIdx){
         int userIdx=(int)request.getAttribute("userIdx");
-        Application application = jobService.getResume(userIdx);
+        GetApplicationRes getApplicationRes = jobService.getResume(userIdx);
 
-        return new ResponseObj<>(application);
+        return new ResponseObj<>(getApplicationRes);
 
     }
 
@@ -123,17 +124,21 @@ public class JobController {
         else return new ResponseObj<>(ResponseStatusCode.ALREADY_APPLIED);
     }
 
-    //공고에 지원한 사람들인지 확인
+    //공고에 지원한 사람들 확인
     @ResponseBody
     @GetMapping("/{jobIdx}/applicants")
-    public ResponseObj<List<Application>> getApplications(HttpServletRequest request,
-            @PathVariable("jobIdx")int jobIdx){
+    public ResponseObj<List<GetApplicationRes>> getApplications(HttpServletRequest request,
+                                                                @PathVariable("jobIdx")int jobIdx){
         int userIdx=(int)request.getAttribute("userIdx");
         int checkCompanyStatus=jobService.checkCompany(userIdx);
-
+        int checkPublisherStatus=jobService.checkPublisherStatus(jobIdx);
+        System.out.println("checkPublisherStatus = " + checkPublisherStatus);
         if(checkCompanyStatus==1) {//기업회원일 경우
-           List<Application> applicantList=jobService.getApplicants(jobIdx);
+            if(checkPublisherStatus==userIdx){
+           List<GetApplicationRes> applicantList=jobService.getApplicants(jobIdx);
            return new ResponseObj<>(applicantList);
+            }
+            return new ResponseObj<>(ResponseStatusCode.INVALID_USER_JWT);
         }
         else return new ResponseObj<>(ResponseStatusCode.NOT_FOR_PERSONAL_USERS);
     }
