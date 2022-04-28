@@ -45,7 +45,7 @@ public class FacilityService {
         this.userService = userService;
     }
 
-    public List<GetFacilityRes> searchFacilities(int userIdx) throws JsonProcessingException {
+    public List<GetFacilityRes> searchHospitals(int userIdx) throws JsonProcessingException {
        User user=userService.findUserInfo(userIdx);
        String lng=user.getUser_lng().toString();
        String lat=user.getUser_lat().toString();
@@ -55,14 +55,39 @@ public class FacilityService {
         System.out.println("keywordList = " + keywordList);
         List<GetFacilityRes> facilityResList=new ArrayList<>();
 
-        for(String keyword:keywordList) {
+        return getGetFacilityRes(lng, lat,1000, keywordList, facilityResList);
+
+    }
+
+    public List<GetFacilityRes> searchWelfares(int userIdx){
+        User user=userService.findUserInfo(userIdx);
+        String lng=user.getUser_lng().toString();
+        String lat=user.getUser_lat().toString();
+
+        List<String> keywordList=new ArrayList<>();
+        keywordList.add("노인주거복지시설");
+        keywordList.add("노인여가복지시설");
+        keywordList.add("재가노인복지시설");
+        keywordList.add("노인보호전문기관");
+        keywordList.add("노인일자리지원기관");
+        System.out.println("keywordList = " + keywordList);
+
+        List<GetFacilityRes> facilityResList=new ArrayList<>();
+
+        return getGetFacilityRes(lng,lat,5000,keywordList,facilityResList);
+
+    }
+
+    private List<GetFacilityRes> getGetFacilityRes(String lng, String lat,
+                                                   int radius,List<String> keywordList, List<GetFacilityRes> facilityResList) {
+        for(String keyword: keywordList) {
             final HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization", REST_API_KEY);
 
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(REST_API_URL)
                     .queryParam("x", lng)
                     .queryParam("y", lat)
-                    .queryParam("radius", 3000);
+                    .queryParam("radius", radius);
 
             final HttpEntity<String> entity = new HttpEntity<String>(headers);
 
@@ -94,6 +119,5 @@ public class FacilityService {
             }
         }
         return facilityResList;
-
     }
 }

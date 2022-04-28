@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GetFacilityRes {
-    private String department;
+    private String keyword;
     private String place_name;
     private String phone;
     private String road_address_name;

@@ -1,6 +1,7 @@
 package com.example.capstone.facility;
 
 import com.example.capstone.config.ResponseObj;
+import com.example.capstone.config.ResponseStatusCode;
 import com.example.capstone.facility.model.response.GetFacilityRes;
 import com.example.capstone.utils.JwtService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,10 +24,18 @@ public class FacilityController {
 
     @ResponseBody
     @GetMapping("")
-    public ResponseObj<List<GetFacilityRes>> searchFacilities(@RequestParam(value="user-num",required = false)int userIdx) throws JsonProcessingException {
+    public ResponseObj<List<GetFacilityRes>> searchFacilities(@RequestParam(value="user-idx",required = false)Integer userIdx,
+                                                                @RequestParam(value="welfare",required = false)Integer welfare,
+                                                                @RequestParam(value="hospital",required = false)Integer hospital) throws JsonProcessingException {
 
-        List<GetFacilityRes> getFacilityResList= facilityService.searchFacilities(userIdx);
-        return new ResponseObj<>(getFacilityResList);
+        if(hospital!=null){
+            List<GetFacilityRes> getFacilityResList= facilityService.searchHospitals(userIdx);
+            return new ResponseObj<>(getFacilityResList);}
+        else if(welfare!=null){
+            List<GetFacilityRes> getFacilityResList= facilityService.searchWelfares(userIdx);
+            return new ResponseObj<>(getFacilityResList);
+        }
+        else return new ResponseObj<>(ResponseStatusCode.REQUEST_ERROR);
 
     }
 }
