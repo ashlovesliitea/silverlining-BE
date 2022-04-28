@@ -82,6 +82,4 @@ public class PostJobReq {
     @JsonProperty("job_lng")
     private Double jobLng;
 
-    @JsonProperty("job_publisher_idx")
-    private Integer jobPublisherIdx;
 }

@@ -83,12 +83,11 @@ public class JobController {
         int userIdx=(int)request.getAttribute("userIdx");
         int checkCompanyStatus=jobService.checkCompany(userIdx);
 
-            if(checkCompanyStatus==1){//기업회원일 경우
+
 
                 List<Job> jobListByPublisher= jobService.getJobByPublisher(publisherNum);
                 return new ResponseObj<>(jobListByPublisher);
-            }
-            else return new ResponseObj<>(ResponseStatusCode.NOT_FOR_PERSONAL_USERS);
+
         }
 
 
