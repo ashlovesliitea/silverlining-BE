@@ -97,6 +97,7 @@ public class FacilityService {
             String uri = builder.encode().toUriString() + "&query=" + keyword;
 
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(uri, HttpMethod.GET, entity, typeRef);
+            System.out.println(response.getBody().get("documents").getClass());
             List<LinkedHashMap<String, String>> facilityInfoList = (List<LinkedHashMap<String, String>>) response.getBody().get("documents");
 
             ObjectMapper objectMapper = new ObjectMapper();
