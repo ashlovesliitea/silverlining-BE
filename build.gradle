@@ -20,6 +20,9 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.18'
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
     runtimeOnly ('mysql:mysql-connector-java') //mysql8
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'

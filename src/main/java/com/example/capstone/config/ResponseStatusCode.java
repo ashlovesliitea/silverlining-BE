@@ -34,6 +34,8 @@ public enum ResponseStatusCode{
 
     NOT_FOR_PERSONAL_USERS(false,2030,"기업회원을 위한 서비스입니다. 일반 회원은 접근이 불가합니다."),
     ALREADY_APPLIED(false,2031,"이미 지원하신 공고입니다."),
+    ALREADY_LIKED_POLICY(false,2032,"이미 즐겨찾기 하신 정책입니다."),
+    ALREADY_LIKED_JOB(false,2033,"이미 즐겨찾기 하신 구인공고입니다."),
 
     /**
      * 3000 : Response 오류

@@ -29,6 +29,7 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final JwtService jwtService;
+    static final double median_income=1757194;
 
     @Autowired
     public UserController(PasswordEncoder passwordEncoder, UserService userService, JwtService jwtService) {
@@ -50,10 +51,15 @@ public class UserController {
         }
 
         int user_idx= userService.getLastId()+1;
+        Integer percent=null;
+        if(postUserReq.getUser_median_income()!=null){
+            double income=postUserReq.getUser_median_income();
+            percent= (int) ((income/median_income)*100);
+        }
         User user= new User(user_idx,postUserReq.getUser_id(), postUserReq.getUser_pw(), postUserReq.getUser_name(),postUserReq.getUser_birth(),
                 postUserReq.getUser_gender(),postUserReq.getUser_phone(), postUserReq.getUser_company_status(),postUserReq.getUser_experience(), postUserReq.getUser_drive_status(), postUserReq.getUser_siNm(),
                 postUserReq.getUser_sggNm(), postUserReq.getUser_emdNm(), postUserReq.getUser_streetNm(), postUserReq.getUser_detailNm(), postUserReq.getUser_lat(), postUserReq.getUser_lng(),
-                postUserReq.getUser_insurance_status(), postUserReq.getUser_median_income(), postUserReq.getUser_guardian_phone(), postUserReq.getUser_profile_img(), postUserReq.getUser_job_cate_list(),
+                postUserReq.getUser_insurance_status(), percent, postUserReq.getUser_guardian_phone(), postUserReq.getUser_profile_img(), postUserReq.getUser_job_cate_list(),
                 postUserReq.getUser_disease_list());
         System.out.println("user.getUser_guardian_phone() = " + user.getUser_guardian_phone());
         PostUserRes postUserRes=userService.createUser(user);
