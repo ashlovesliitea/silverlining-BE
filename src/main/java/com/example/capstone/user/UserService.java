@@ -3,10 +3,12 @@ package com.example.capstone.user;
 import com.example.capstone.config.ResponseException;
 import com.example.capstone.job.JobDao;
 import com.example.capstone.user.model.entity.User;
+import com.example.capstone.user.model.request.PatchAddressReq;
 import com.example.capstone.user.model.response.GetApplyRes;
 import com.example.capstone.user.model.response.PostLoginRes;
 import com.example.capstone.user.model.response.PostUserRes;
 import com.example.capstone.utils.JwtService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import static com.example.capstone.config.ResponseStatusCode.*;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserService {
 
     private final UserDao userDao;
@@ -93,5 +96,29 @@ public class UserService {
 
     public List<GetApplyRes> findMyApplications(int userIdx) {
         return userDao.findMyApplications(userIdx);
+    }
+
+    public int checkUserPhone(String recipientNum) {
+        return userDao.checkUserPhone(recipientNum);
+    }
+
+    public int modifyPassword(int userIdx, String pw) {
+        String pwd= passwordEncoder.encode(pw);
+       return userDao.modifyPassword(userIdx,pwd);
+
+    }
+
+    public boolean checkPw(int userIdx, String old_pw) {
+        log.info(old_pw);
+        String old_pw_db=userDao.findPwdByIdx(userIdx);
+        return passwordEncoder.matches(old_pw,old_pw_db);
+    }
+
+    public void modifyDisease(int userIdx, List<Integer> diseaseList) {
+        userDao.modifyDisease(userIdx,diseaseList);
+    }
+
+    public int modifyAddress(int userIdx, PatchAddressReq patchAddressReq) {
+        return userDao.modifyAddress(userIdx,patchAddressReq);
     }
 }

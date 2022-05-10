@@ -36,6 +36,19 @@ public enum ResponseStatusCode{
     ALREADY_APPLIED(false,2031,"이미 지원하신 공고입니다."),
     ALREADY_LIKED_POLICY(false,2032,"이미 즐겨찾기 하신 정책입니다."),
     ALREADY_LIKED_JOB(false,2033,"이미 즐겨찾기 하신 구인공고입니다."),
+    ALREADY_JOINED_PHONE(false,2034,"이미 가입된 전화번호입니다."),
+
+    //유저 비번, 유저 직무 경험, 유저 운전 여부, 유저 주소+ 유저 위경도, 유저 보험 여부, 유저 중위 소득, 유저 프로필 이미지, 유저 질병 여부, 관심 분야
+    MODIFY_PW_FAIL(false,2050,"비밀번호 수정에 실패하였습니다."),
+    OLD_PW_DOESNT_MATCH(false,2058,"오래된 비밀번호가 틀렸습니다."),
+    NEW_PW_CHECK_FAIL(false,2059,"새로운 비밀번호와 재확인 비밀번호가 불일치합니다."),
+    MODIFY_EXP_FAIL(false,2051,"직무 경험 수정에 실패하였습니다"),
+    MODIFY_DRIVE_FAIL(false,2052,"운전 여부 수정에 실패하였습니다"),
+    MODIFY_ADDRESS_FAIL(false,2053,"유저 주소 수정에 실패하였습니다"),
+    MODIFY_INSURANCE_FAIL(false,2054,"유저 보험 여부 수정에 실패하였습니다"),
+    MODIFY_INCOME_FAIL(false,2055,"유저 중위 소득 수정에 실패하였습니다"),
+    MODIFY_DISEASE_FAIL(false,2056,"유저 질병 여부 수정에 실패하였습니다"),
+    MODIFY_INTEREST_FAIL(false,2057,"유저 관심 분야 수정에 실패하였습니다"),
 
     /**
      * 3000 : Response 오류

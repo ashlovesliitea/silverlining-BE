@@ -1,6 +1,7 @@
 package com.example.capstone.user;
 
 import com.example.capstone.user.model.entity.User;
+import com.example.capstone.user.model.request.PatchAddressReq;
 import com.example.capstone.user.model.response.GetApplyRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -80,6 +81,11 @@ public class UserDao {
         return this.jdbcTemplate.queryForObject(findPwdQuery,String.class,user_id);
     }
 
+    public String findPwdByIdx(int user_idx) {
+        String findPwdQuery="select user_pw from user where user_idx=?";
+        return this.jdbcTemplate.queryForObject(findPwdQuery,String.class,user_idx);
+    }
+
     public int findUserIdx(String user_id) {
         String findIdxQuery="select user_idx from user where user_id=?";
         return this.jdbcTemplate.queryForObject(findIdxQuery,int.class,user_id);
@@ -145,5 +151,40 @@ public class UserDao {
                 ),userIdx);
 
 
+    }
+
+    public int checkUserPhone(String recipientNum) {
+        String checkPhoneQuery="select exists(select * from user where user_phone=?)";
+        return this.jdbcTemplate.queryForObject(checkPhoneQuery,int.class,recipientNum);
+    }
+
+    public int modifyPassword(int userIdx, String pwd) {
+        String modifyPwQuery="update user u set u.user_pw=? where user_idx=?";
+        Object[] modifyParams={pwd,userIdx};
+        return this.jdbcTemplate.update(modifyPwQuery,modifyParams);
+    }
+
+    public void modifyDisease(int userIdx, List<Integer> diseaseList) {
+        String deleteDisease="delete from user_disease where user_idx=?";
+        this.jdbcTemplate.update(deleteDisease,userIdx);
+        if(diseaseList!=null) {
+
+            for (int dis : diseaseList) {
+                String lastDisId = "select max(user_disease_idx) from user_disease";
+                int lastId = this.jdbcTemplate.queryForObject(lastDisId, int.class);
+
+                String createUserDisease = "insert into user_disease(user_disease_idx,disease_idx,user_idx) values(?,?,?)";
+                Object[] createUserDiseaseParams = {lastId + 1, dis, userIdx};
+                this.jdbcTemplate.update(createUserDisease, createUserDiseaseParams);
+            }
+        }
+
+
+    }
+
+    public int modifyAddress(int userIdx, PatchAddressReq patchAddressReq) {
+        String updateAddress="update user u set u.user_siNm=?,u.user_lat=?,u.user_lng=? where u.user_idx=?";
+        Object[] addressParams={patchAddressReq.getSiNm(),patchAddressReq.getUser_lat(),patchAddressReq.getUser_lng(),userIdx};
+        return this.jdbcTemplate.update(updateAddress,addressParams);
     }
 }
