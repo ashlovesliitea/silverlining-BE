@@ -10,7 +10,7 @@ public enum ResponseStatusCode{
      * 1000: Request 성공
      */
     SUCCESS(true, 1000, "요청에 성공하였습니다."),
-
+    ABLE_TO_MODIFY(true, 1001, "구인 공고를 수정할 수 있는 권한이 있습니다."),
 
     /**
      * 2000 : Request 오류
@@ -49,6 +49,18 @@ public enum ResponseStatusCode{
     MODIFY_INCOME_FAIL(false,2055,"유저 중위 소득 수정에 실패하였습니다"),
     MODIFY_DISEASE_FAIL(false,2056,"유저 질병 여부 수정에 실패하였습니다"),
     MODIFY_INTEREST_FAIL(false,2057,"유저 관심 분야 수정에 실패하였습니다"),
+
+
+    //유저 비번, 유저 직무 경험, 유저 운전 여부, 유저 주소+ 유저 위경도, 유저 보험 여부, 유저 중위 소득, 유저 프로필 이미지, 유저 질병 여부, 관심 분야
+    MODIFY_TITLE_FAIL(false,2080,"공고 제목 수정에 실패하였습니다."),
+    MODIFY_AGE_FAIL(false,2081,"공고 연령 수정에 실패하였습니다"),
+    MODIFY_GENDER_FAIL(false,2082,"공고 성별 수정에 실패하였습니다"),
+    MODIFY_WAGE_FAIL(false,2083,"공고 수당 수정에 실패하였습니다"),
+    MODIFY_TIME_FAIL(false,2084,"공고 업무시간 수정에 실패하였습니다"),
+    MODIFY_PERSONNEL_FAIL(false,2085,"공고 정원 수정에 실패하였습니다"),
+    MODIFY_DETAIL_FAIL(false,2086,"공고 상세내용 수정에 실패하였습니다"),
+    MODIFY_OFFER_STATUS_FAIL(false,2087,"공고 모집여부 수정에 실패하였습니다"),
+    MODIFY_JOB_ADDRESS_FAIL(false,2088,"공고 주소 수정에 실패하였습니다"),
 
     /**
      * 3000 : Response 오류

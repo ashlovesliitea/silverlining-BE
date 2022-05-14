@@ -1,6 +1,7 @@
 package com.example.capstone.job;
 
 import com.example.capstone.job.model.entity.Job;
+import com.example.capstone.job.model.request.*;
 import com.example.capstone.job.model.response.GetApplicationRes;
 import com.example.capstone.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +71,40 @@ public class JobService {
 
     public int checkPublisherStatus(int jobIdx) {
         return jobDao.checkPublisherStatus(jobIdx);
+    }
+
+    public int modifyTitle( PatchTitleReq patchTitleReq) {
+        return jobDao.modifyTitle(patchTitleReq);
+    }
+
+    public int modifyAge(PatchAgeReq patchAgeReq) {
+        return jobDao.modifyAge(patchAgeReq);
+    }
+
+    public int modifyGender(PatchGenderReq patchGenderReq) {
+        return jobDao.modifyGender(patchGenderReq);}
+
+    public int modifyWage(PatchWageReq patchWageReq) {
+        return jobDao.modifyWage(patchWageReq);
+    }
+
+    public int modifyTime(PatchTimeReq patchTimeReq) {
+        return jobDao.modifyTime(patchTimeReq);
+    }
+
+    public int modifyPersonnel(PatchPersonnelReq patchPersonnelReq) {
+        return jobDao.modifyPersonnel(patchPersonnelReq);
+    }
+
+    public int modifyDetail(PatchDetailReq patchDetailReq) {
+        return jobDao.modifyDetail(patchDetailReq);
+    }
+
+    public int modifyOffer(PatchOfferReq patchOfferReq) {
+        return jobDao.modifyOffer(patchOfferReq);
+    }
+
+    public int modifyyAddress(PatchAddressReq patchAddressReq) {
+        return jobDao.modifyAddress(patchAddressReq);
     }
 }

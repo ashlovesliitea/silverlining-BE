@@ -6,8 +6,8 @@ import com.example.capstone.config.ResponseObj;
 import com.example.capstone.config.ResponseStatusCode;
 import com.example.capstone.config.annotation.NoAuth;
 import com.example.capstone.job.model.entity.Job;
+import com.example.capstone.job.model.request.*;
 import com.example.capstone.job.model.response.GetApplicationRes;
-import com.example.capstone.job.model.request.PostJobReq;
 import com.example.capstone.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -144,4 +144,100 @@ public class JobController {
 
 
 
-}
+//job_title, age,job_gender, job_wage, job_working_time, job_personnel, job_detail, job_offer_status, job_address
+
+    @ResponseBody
+    @PostMapping("/{jobIdx}/modify-auth")
+    public ResponseObj<String> modifyAuth(@PathVariable("jobIdx") int jobIdx,HttpServletRequest request){
+        int userIdx=(int)request.getAttribute("userIdx");
+        if(userIdx==jobService.checkPublisherStatus(jobIdx)) return new ResponseObj<>(ResponseStatusCode.ABLE_TO_MODIFY);
+        else return new ResponseObj(ResponseStatusCode.INVALID_USER_JWT);
+
+    }
+
+    @ResponseBody
+    @PatchMapping("/{jobIdx}/title")
+    public ResponseObj<String> modifyTitle(@PathVariable("jobIdx") int jobIdx,
+                                           @RequestBody PatchTitleReq patchTitleReq){
+        int check= jobService.modifyTitle(patchTitleReq);
+       if(check==1) return new ResponseObj<>("");
+       else return new ResponseObj(ResponseStatusCode.MODIFY_TITLE_FAIL);
+    }
+
+    @ResponseBody
+    @PatchMapping("/{jobIdx}/age")
+    public ResponseObj<String> modifyAge(@PathVariable("jobIdx") int jobIdx,
+                                         @RequestBody PatchAgeReq patchAgeReq){
+        int check= jobService.modifyAge(patchAgeReq);
+        if(check==1) return new ResponseObj<>("");
+        else return new ResponseObj(ResponseStatusCode.MODIFY_AGE_FAIL);
+
+
+    }
+
+    @ResponseBody
+    @PatchMapping("/{jobIdx}/gender")
+    public ResponseObj<String> modifyGender(@PathVariable("jobIdx") int jobIdx,
+                                            @RequestBody PatchGenderReq patchGenderReq){
+        int check= jobService.modifyGender(patchGenderReq);
+        if(check==1) return new ResponseObj<>("");
+        else return new ResponseObj(ResponseStatusCode.MODIFY_GENDER_FAIL);
+    }
+
+
+    @ResponseBody
+    @PatchMapping("/{jobIdx}/wage")
+    public ResponseObj<String> modifyWage(@PathVariable("jobIdx") int jobIdx,
+                                          @RequestBody PatchWageReq patchWageReq){
+        int check= jobService.modifyWage(patchWageReq);
+        if(check==1) return new ResponseObj<>("");
+        else return new ResponseObj(ResponseStatusCode.MODIFY_WAGE_FAIL);
+    }
+
+    @ResponseBody
+    @PatchMapping("/{jobIdx}/time")
+    public ResponseObj<String> modifyTime(@PathVariable("jobIdx") int jobIdx,
+                                          @RequestBody PatchTimeReq patchTimeReq){
+        int check= jobService.modifyTime(patchTimeReq);
+        if(check==1) return new ResponseObj<>("");
+        else return new ResponseObj(ResponseStatusCode.MODIFY_TIME_FAIL);}
+
+
+    @ResponseBody
+    @PatchMapping("/{jobIdx}/personnel")
+    public ResponseObj<String> modifyPersonnel(@PathVariable("jobIdx") int jobIdx,
+                                               @RequestBody PatchPersonnelReq patchPersonnelReq){
+        int check= jobService.modifyPersonnel(patchPersonnelReq);
+        if(check==1) return new ResponseObj<>("");
+        else return new ResponseObj(ResponseStatusCode.MODIFY_PERSONNEL_FAIL);}
+
+    @ResponseBody
+    @PatchMapping("/{jobIdx}/detail")
+    public ResponseObj<String> modifyDetail(@PathVariable("jobIdx") int jobIdx,
+                                            @RequestBody PatchDetailReq patchDetailReq){
+        int check= jobService.modifyDetail(patchDetailReq);
+        if(check==1) return new ResponseObj<>("");
+        else return new ResponseObj(ResponseStatusCode.MODIFY_DETAIL_FAIL);}
+
+    @ResponseBody
+    @PatchMapping("/{jobIdx}/offer")
+    public ResponseObj<String> modifyOffer(@PathVariable("jobIdx") int jobIdx,
+                                           @RequestBody PatchOfferReq patchOfferReq){
+        int check= jobService.modifyOffer(patchOfferReq);
+        if(check==1) return new ResponseObj<>("");
+        else return new ResponseObj(ResponseStatusCode.MODIFY_OFFER_STATUS_FAIL);}
+
+
+    @ResponseBody
+    @PatchMapping("/{jobIdx}/address")
+    public ResponseObj<String> modifyAddress(@PathVariable("jobIdx") int jobIdx,
+                                             @RequestBody PatchAddressReq patchAddressReq){
+        int check= jobService.modifyyAddress(patchAddressReq);
+        if(check==1) return new ResponseObj<>("");
+        else return new ResponseObj(ResponseStatusCode.MODIFY_ADDRESS_FAIL);}
+    }
+
+
+
+
+

@@ -1,6 +1,7 @@
 package com.example.capstone.job;
 
 import com.example.capstone.job.model.entity.Job;
+import com.example.capstone.job.model.request.*;
 import com.example.capstone.job.model.response.GetApplicationRes;
 import com.example.capstone.user.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -220,5 +221,61 @@ public class JobDao {
     public int checkPublisherStatus(int jobIdx) {
         String checkQuery="select job_publisher_idx from job where job_idx=?";
         return this.jdbcTemplate.queryForObject(checkQuery,int.class,jobIdx);
+    }
+
+    public int modifyTitle( PatchTitleReq patchTitleReq) {
+        String modifyTitle="update job j set j.job_title=? where j.job_idx=?";
+        Object[] modifyParams={patchTitleReq.getJob_title(),patchTitleReq.getJob_idx()};
+        return this.jdbcTemplate.update(modifyTitle,modifyParams);
+    }
+
+    public int modifyAge(PatchAgeReq patchAgeReq) {
+        String modifyAge="update job j set j.job_min_age=?, j.job_max_age=? where j.job_idx=?";
+
+        Object[] ageParams={patchAgeReq.getJob_min_age(),patchAgeReq.getJob_max_age(),patchAgeReq.getJob_idx()};
+        return this.jdbcTemplate.update(modifyAge,ageParams);
+
+    }
+
+    public int modifyGender(PatchGenderReq patchGenderReq) {
+        String modifyGender="update job j set j.job_gender=? where j.job_idx=?";
+        Object[] modifyParams={patchGenderReq.getJob_gender(),patchGenderReq.getJob_idx()};
+        return this.jdbcTemplate.update(modifyGender,modifyParams);
+    }
+
+    public int modifyWage(PatchWageReq patchWageReq) {
+        String modifyWage="update job j set j.job_wage=? where j.job_idx=?";
+        Object[] modifyParams={patchWageReq.getJob_wage(),patchWageReq.getJob_idx()};
+        return this.jdbcTemplate.update(modifyWage,modifyParams);
+    }
+
+    public int modifyTime(PatchTimeReq patchTimeReq) {
+        String modifyTime="update job j set j.job_working_time=? where j.job_idx=?";
+        Object[] modifyParams={patchTimeReq.getJob_working_time(),patchTimeReq.getJob_idx()};
+        return this.jdbcTemplate.update(modifyTime,modifyParams);
+    }
+
+    public int modifyPersonnel(PatchPersonnelReq patchPersonnelReq) {
+        String modifyPersonnel="update job j set j.job_personnel=? where j.job_idx=?";
+        Object[] modifyParams={patchPersonnelReq.getJob_personnel(),patchPersonnelReq.getJob_idx()};
+        return this.jdbcTemplate.update(modifyPersonnel,modifyParams);
+    }
+
+    public int modifyDetail(PatchDetailReq patchDetailReq) {
+        String modifyDetail="update job j set j.job_detail=? where j.job_idx=?";
+        Object[] modifyParams={patchDetailReq.getJob_detail(),patchDetailReq.getJob_idx()};
+        return this.jdbcTemplate.update(modifyDetail,modifyParams);
+    }
+
+    public int modifyOffer(PatchOfferReq patchOfferReq) {
+        String modifyOffer="update job j set j.job_offer_status=? where j.job_idx=?";
+        Object[] modifyParams={patchOfferReq.getJob_offer_status(),patchOfferReq.getJob_idx()};
+        return this.jdbcTemplate.update(modifyOffer,modifyParams);
+    }
+
+    public int modifyAddress(PatchAddressReq patchAddressReq) {
+        String modifyAddress="update job j set j.job_siNm=?,j.job_lat=?,j.job_lng=? where j.job_idx=?";
+        Object[] modifyParams={patchAddressReq.getJob_siNm(),patchAddressReq.getJob_lat(),patchAddressReq.getJob_lng(),patchAddressReq.getJob_idx()};
+        return this.jdbcTemplate.update(modifyAddress,modifyParams);
     }
 }
