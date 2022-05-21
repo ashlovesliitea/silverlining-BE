@@ -51,6 +51,7 @@ public class JwtService {
         return request.getHeader("X-ACCESS-TOKEN");
     }
 
+
     /*
     JWT에서 userIdx 추출
     @return int
@@ -80,5 +81,36 @@ public class JwtService {
         // 3. userIdx 추출
         return claims.getBody().get("userIdx",Integer.class);
     }
+
+
+    /*
+    JWT에서 userIdx 추출
+    @return int
+    @throws BaseException
+     */
+    public int getUserIdx2(String accessToken) throws ResponseException {
+
+        Key secretKey= Keys.hmacShaKeyFor(Secret.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+
+        //1. JWT 추출
+        if(accessToken == null || accessToken.length() == 0){
+            throw new ResponseException(ResponseStatusCode.EMPTY_JWT);
+        }
+
+        // 2. JWT parsing
+        Jws<Claims> claims;
+        try{
+            claims = Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(accessToken);
+        } catch (Exception ignored) {
+            throw new ResponseException(ResponseStatusCode.INVALID_JWT);
+        }
+
+        // 3. userIdx 추출
+        return claims.getBody().get("userIdx",Integer.class);
+    }
+
 
 }
