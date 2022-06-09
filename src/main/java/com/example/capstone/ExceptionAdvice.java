@@ -58,7 +58,7 @@ public class ExceptionAdvice {
     }
 
     //JsonParseException,MalformedJwtException,NestedServletException
-    @ExceptionHandler(value={MalformedInputException.class, NestedServletException.class})
+    @ExceptionHandler(value={MalformedInputException.class})
     public ResponseObj JWTExceptionHandler(){
         return new ResponseObj(INVALID_JWT);
     }
