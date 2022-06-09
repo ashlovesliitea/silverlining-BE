@@ -6,10 +6,7 @@ import com.example.capstone.config.annotation.NoAuth;
 import com.example.capstone.user.model.entity.User;
 import com.example.capstone.user.model.message.SendSmsResponse;
 import com.example.capstone.user.model.request.*;
-import com.example.capstone.user.model.response.GetApplyRes;
-import com.example.capstone.user.model.response.GetValidRes;
-import com.example.capstone.user.model.response.PostLoginRes;
-import com.example.capstone.user.model.response.PostUserRes;
+import com.example.capstone.user.model.response.*;
 import com.example.capstone.utils.JwtService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +59,7 @@ public class UserController {
         int user_idx = userService.getLastId() + 1;
         Integer percent = null;
         if (postUserReq.getUser_median_income() != null) {
-            double income = postUserReq.getUser_median_income();
-            percent = (int) ((income / median_income) * 100);
+            percent = getMedianIncome(postUserReq.getUser_median_income());
         }
         User user = new User(user_idx, postUserReq.getUser_id(), postUserReq.getUser_pw(), postUserReq.getUser_name(), postUserReq.getUser_birth(),
                 postUserReq.getUser_gender(), postUserReq.getUser_phone(), postUserReq.getUser_company_status(), postUserReq.getUser_experience(), postUserReq.getUser_drive_status(), postUserReq.getUser_siNm(),
@@ -75,6 +71,7 @@ public class UserController {
 
         return new ResponseObj<>(postUserRes);
     }
+
 
     @NoAuth
     @ResponseBody
@@ -126,6 +123,7 @@ public class UserController {
 
     }
 
+
     @NoAuth
     @ResponseBody
     @GetMapping("")
@@ -137,7 +135,8 @@ public class UserController {
             user_list.add(user);
             return new ResponseObj<>(user_list);
 
-        } else {
+        }
+        else {
             List<Integer> userIdxList = userService.findUserList();
             for (int user_idx : userIdxList) {
                 User user = userService.findUserInfo(user_idx);
@@ -189,4 +188,99 @@ public class UserController {
         if(modifyCheck!=0) return new ResponseObj<>("");
         else return new ResponseObj(MODIFY_ADDRESS_FAIL);
     }
+
+    //보험여부, 운전면허 여부, 직무 경험(user_experience), 상세 주소(user_detailNm) 수정 기능이 필요합니다
+
+    @ResponseBody
+    @PatchMapping("/{userNum}/insurance")
+    public ResponseObj<String> modifyInsurance(@PathVariable("userNum")int userIdx,
+                                             @RequestBody PatchInsuranceReq patchInsuranceReq) {
+      if(userIdx==patchInsuranceReq.getUser_idx()){
+          int modifyCheck= userService.modifyInsurance(patchInsuranceReq);
+        if(modifyCheck!=0) return new ResponseObj<>("");
+        else return new ResponseObj<>(MODIFY_INSURANCE_FAIL);
+      }else{
+          return new ResponseObj<>(REQUEST_ERROR);
+      }
+    }
+    @ResponseBody
+    @PatchMapping("/{userNum}/drive-status")
+        public ResponseObj<String> modifyDrive(@PathVariable("userNum")int userIdx,
+        @RequestBody PatchDriveReq patchDriveReq){
+
+        if(userIdx==patchDriveReq.getUser_idx()){
+            int modifyCheck= userService.modifyDrive(patchDriveReq);
+            if(modifyCheck!=0) return new ResponseObj<>("");
+            else return new ResponseObj<>(MODIFY_DRIVE_FAIL);
+        }else{
+            return new ResponseObj<>(REQUEST_ERROR);
+        }
+    }
+
+
+    @ResponseBody
+    @PatchMapping("/{userNum}/experience")
+        public ResponseObj<String> modifyExperience(@PathVariable("userNum")int userIdx,
+        @RequestBody PatchExpReq patchExpReq){
+
+        if(userIdx==patchExpReq.getUser_idx()){
+            int modifyCheck= userService.modifyExperience(patchExpReq);
+            if(modifyCheck!=0) return new ResponseObj<>("");
+            else return new ResponseObj<>(MODIFY_EXP_FAIL);
+        }else{
+            return new ResponseObj<>(REQUEST_ERROR);
+        }
+    }
+
+    @ResponseBody
+    @PatchMapping("/{userNum}/detail-address")
+        public ResponseObj<String> modifyDetailAddress(@PathVariable("userNum")int userIdx,
+        @RequestBody PatchDetailAddressReq patchDetailAddressReq){
+
+        if(userIdx==patchDetailAddressReq.getUser_idx()){
+            int modifyCheck= userService.modifyDetailAddress(patchDetailAddressReq);
+            if(modifyCheck!=0) return new ResponseObj<>("");
+            else return new ResponseObj<>(MODIFY_EXP_FAIL);
+        }else{
+            return new ResponseObj<>(REQUEST_ERROR);
+        }
+        }
+    @ResponseBody
+    @PatchMapping("/{userNum}/guardian")
+        public ResponseObj<String> modifyGuardian(@PathVariable("userNum")int userIdx,
+        @RequestBody PatchGuardianReq patchGuardianReq){
+        if(userIdx==patchGuardianReq.getUser_idx()){
+            int modifyCheck= userService.modifyGuardian(patchGuardianReq);
+            if(modifyCheck!=0) return new ResponseObj<>("");
+            else return new ResponseObj<>(MODIFY_GUARDIAN_FAIL);
+        }else{
+            return new ResponseObj<>(REQUEST_ERROR);
+        }
+    }
+
+
+    private int getMedianIncome(double income) {
+        int percent = (int) Math.round((income / median_income) * 100);
+        System.out.println("percent = " + percent);
+        return percent;
+    }
+
+    @ResponseBody
+    @PatchMapping("/{userNum}/income")
+    public ResponseObj<String> modifyIncome(@PathVariable("userNum")int userIdx,
+                                              @RequestBody PatchIncomeReq patchIncomeReq){
+        if(userIdx==patchIncomeReq.getUser_idx()){
+
+            patchIncomeReq.setUser_income(getMedianIncome(patchIncomeReq.getUser_income()));
+
+            int modifyCheck= userService.modifyIncome(patchIncomeReq);
+            if(modifyCheck!=0) return new ResponseObj<>("");
+            else return new ResponseObj<>(MODIFY_INCOME_FAIL);
+        }else{
+            return new ResponseObj<>(REQUEST_ERROR);
+        }
+    }
+
+
+
 }

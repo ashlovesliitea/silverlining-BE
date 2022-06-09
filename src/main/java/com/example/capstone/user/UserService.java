@@ -3,8 +3,9 @@ package com.example.capstone.user;
 import com.example.capstone.config.ResponseException;
 import com.example.capstone.job.JobDao;
 import com.example.capstone.user.model.entity.User;
-import com.example.capstone.user.model.request.PatchAddressReq;
+import com.example.capstone.user.model.request.*;
 import com.example.capstone.user.model.response.GetApplyRes;
+import com.example.capstone.chat.model.GetPhoneRes;
 import com.example.capstone.user.model.response.PostLoginRes;
 import com.example.capstone.user.model.response.PostUserRes;
 import com.example.capstone.utils.JwtService;
@@ -120,5 +121,33 @@ public class UserService {
 
     public int modifyAddress(int userIdx, PatchAddressReq patchAddressReq) {
         return userDao.modifyAddress(userIdx,patchAddressReq);
+    }
+
+    public GetPhoneRes findByUserPhone(String user_phone) {
+        return userDao.findByUserPhone(user_phone);
+    }
+
+    public Integer modifyInsurance(PatchInsuranceReq patchInsuranceReq) {
+        return userDao.modifyInsurance(patchInsuranceReq);
+    }
+
+    public int modifyDrive(PatchDriveReq patchDriveReq) {
+        return userDao.modifyDrive(patchDriveReq);
+    }
+
+    public int modifyExperience(PatchExpReq patchExpReq) {
+        return userDao.modifyExperience(patchExpReq);
+    }
+
+    public int modifyDetailAddress(PatchDetailAddressReq patchDetailAddressReq) {
+        return userDao.modifyDetailAddress(patchDetailAddressReq);
+    }
+
+    public int modifyGuardian(PatchGuardianReq patchGuardianReq) {
+        return userDao.modifyGuardian(patchGuardianReq);
+    }
+
+    public int modifyIncome(PatchIncomeReq patchIncomeReq) {
+        return userDao.modifyIncome(patchIncomeReq);
     }
 }

@@ -25,6 +25,8 @@ public enum ResponseStatusCode{
     HTTP_MESSAGE_UNREADABLE(false,2006,"JSON값을 파싱할 수 없습니다. 다시 시도해주세요."),
     // users
     USERS_EMPTY_USER_ID(false, 2010, "유저 아이디 값을 확인해주세요."),
+    NO_USER_JOINED_BY_THIS_PHONE_NUM(false,2011,"해당 번호로 가입된 유저가 없습니다."),
+    ALREADY_FRIEND(false,2012,"이미 친구로 등록된 유저입니다."),
 
     // [POST] /users
     POST_USERS_EMPTY_EMAIL(false, 2015, "이메일을 입력해주세요."),
@@ -49,7 +51,8 @@ public enum ResponseStatusCode{
     MODIFY_INCOME_FAIL(false,2055,"유저 중위 소득 수정에 실패하였습니다"),
     MODIFY_DISEASE_FAIL(false,2056,"유저 질병 여부 수정에 실패하였습니다"),
     MODIFY_INTEREST_FAIL(false,2057,"유저 관심 분야 수정에 실패하였습니다"),
-
+    MODIFY_DETAIL_ADDRESS_FAIL(false,2058,"유저 상세 주소 수정에 실패하였습니다."),
+    MODIFY_GUARDIAN_FAIL(false,2059,"유저의 보호자 연락처 수정에 실패하였습니다."),
 
     //유저 비번, 유저 직무 경험, 유저 운전 여부, 유저 주소+ 유저 위경도, 유저 보험 여부, 유저 중위 소득, 유저 프로필 이미지, 유저 질병 여부, 관심 분야
     MODIFY_TITLE_FAIL(false,2080,"공고 제목 수정에 실패하였습니다."),

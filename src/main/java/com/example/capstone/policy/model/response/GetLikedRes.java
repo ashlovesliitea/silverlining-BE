@@ -11,4 +11,5 @@ public class GetLikedRes {
     private int policy_liked_idx;
     private int policy_idx;
     private String policy_name;
+    private String policy_phone;
 }

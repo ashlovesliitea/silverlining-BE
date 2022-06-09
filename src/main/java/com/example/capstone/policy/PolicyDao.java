@@ -96,12 +96,13 @@ public class PolicyDao {
     }
 
     public List<GetLikedRes> getLikes(int userIdx) {
-        String getLikedQuery="select policy_liked_idx,pl.policy_idx,p.policy_name from policy_liked pl inner join policy p on p.policy_idx=pl.policy_idx where pl.user_idx=?";
+        String getLikedQuery="select policy_liked_idx,pl.policy_idx,p.policy_name,p.policy_phone from policy_liked pl inner join policy p on p.policy_idx=pl.policy_idx where pl.user_idx=?";
         return this.jdbcTemplate.query(getLikedQuery,
                 (rs,rowNum)->new GetLikedRes(
                         rs.getInt(1),
                         rs.getInt(2),
-                        rs.getString(3)
+                        rs.getString(3),
+                        rs.getString(4)
                 ),userIdx);
     }
 

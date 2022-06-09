@@ -42,6 +42,11 @@ public class User {
         this.user_pw=user_pw;
     }
 
+    public User(Integer user_idx,String user_name){
+        this.user_idx=user_idx;
+        this.user_name=user_name;
+    }
+
     public User(Date user_birth,int user_gender,double user_lat,double user_lng){
         this.user_birth=user_birth;
         this.user_gender=user_gender;

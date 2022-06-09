@@ -15,4 +15,5 @@ public class GetApplyRes {
     private int user_idx;
     private int job_idx;
     private String job_title;
+    private String company_name;
 }

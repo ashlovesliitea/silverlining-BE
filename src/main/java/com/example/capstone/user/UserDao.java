@@ -1,8 +1,9 @@
 package com.example.capstone.user;
 
 import com.example.capstone.user.model.entity.User;
-import com.example.capstone.user.model.request.PatchAddressReq;
+import com.example.capstone.user.model.request.*;
 import com.example.capstone.user.model.response.GetApplyRes;
+import com.example.capstone.chat.model.GetPhoneRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -140,14 +141,15 @@ public class UserDao {
     }
 
     public List<GetApplyRes> findMyApplications(int userIdx) {
-        String jobIdxListQuery="select user_job_idx,uja.job_idx,job_title from user_job_apply uja " +
+        String jobIdxListQuery="select user_job_idx,uja.job_idx,job_title,company_name from user_job_apply uja " +
                 "inner join job on job.job_idx=uja.job_idx where user_idx=?";
         return this.jdbcTemplate.query(jobIdxListQuery,
                 (rs,rowNum)->new GetApplyRes(
                         rs.getInt(1),
                         userIdx,
                         rs.getInt(2),
-                        rs.getString(3)
+                        rs.getString(3),
+                        rs.getString(4)
                 ),userIdx);
 
 
@@ -168,6 +170,7 @@ public class UserDao {
         String deleteDisease="delete from user_disease where user_idx=?";
         this.jdbcTemplate.update(deleteDisease,userIdx);
         if(diseaseList!=null) {
+            System.out.println("userIdx = " + userIdx);
 
             for (int dis : diseaseList) {
                 String lastDisId = "select max(user_disease_idx) from user_disease";
@@ -186,5 +189,51 @@ public class UserDao {
         String updateAddress="update user u set u.user_siNm=?,u.user_lat=?,u.user_lng=? where u.user_idx=?";
         Object[] addressParams={patchAddressReq.getSiNm(),patchAddressReq.getUser_lat(),patchAddressReq.getUser_lng(),userIdx};
         return this.jdbcTemplate.update(updateAddress,addressParams);
+    }
+
+    public GetPhoneRes findByUserPhone(String user_phone) {
+        String findUserInfoQuery="select user_idx,user_name from user where user_phone=?";
+
+
+        return this.jdbcTemplate.queryForObject(findUserInfoQuery,
+                (rs,rowNum)->new GetPhoneRes(rs.getInt(1),
+                        rs.getString(2)),
+                user_phone);
+    }
+
+    public Integer modifyInsurance(PatchInsuranceReq patchInsuranceReq) {
+        String updateInsuranceQuery="update user u set u.user_insurance_status=? where u.user_idx=?";
+        Object[] insuranceParams={patchInsuranceReq.getUser_insurance_status(),patchInsuranceReq.getUser_idx()};
+        return this.jdbcTemplate.update(updateInsuranceQuery,insuranceParams);
+    }
+
+    public int modifyDrive(PatchDriveReq patchDriveReq) {
+        String updateDriveStatusQuery="update user u set u.user_drive_status=?  where u.user_idx=?";
+        Object[] driveParams={patchDriveReq.getUser_drive_status(),patchDriveReq.getUser_idx()};
+        return this.jdbcTemplate.update(updateDriveStatusQuery,driveParams);
+    }
+
+    public int modifyExperience(PatchExpReq patchExpReq) {
+        String updateExpQuery="update user u set u.user_experience=?  where u.user_idx=?";
+        Object[] ExpParams={patchExpReq.getUser_experience(),patchExpReq.getUser_idx()};
+        return this.jdbcTemplate.update(updateExpQuery,ExpParams);
+    }
+
+    public int modifyDetailAddress(PatchDetailAddressReq patchDetailAddressReq) {
+        String updateDetailAddressQuery="update user u set u.user_detailNm=?  where u.user_idx=?";
+        Object[] detailAddressParams={patchDetailAddressReq.getUser_detailNm(),patchDetailAddressReq.getUser_idx()};
+        return this.jdbcTemplate.update(updateDetailAddressQuery,detailAddressParams);
+    }
+
+    public int modifyGuardian(PatchGuardianReq patchGuardianReq) {
+        String updateGuardianQuery="update user u set u.user_guardian_phone=?  where u.user_idx=?";
+        Object[] modifyGuardianParams={patchGuardianReq.getUser_guardian_phone(),patchGuardianReq.getUser_idx()};
+        return this.jdbcTemplate.update(updateGuardianQuery,modifyGuardianParams);
+    }
+
+    public int modifyIncome(PatchIncomeReq patchIncomeReq) {
+        String updateIncomeQuery="update user u set u.user_median_income=? where u.user_idx=?";
+        Object[] modifyIncomeParams={patchIncomeReq.getUser_income(),patchIncomeReq.getUser_idx()};
+        return this.jdbcTemplate.update(updateIncomeQuery,modifyIncomeParams);
     }
 }
