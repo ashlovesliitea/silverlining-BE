@@ -27,6 +27,7 @@ public enum ResponseStatusCode{
     USERS_EMPTY_USER_ID(false, 2010, "유저 아이디 값을 확인해주세요."),
     NO_USER_JOINED_BY_THIS_PHONE_NUM(false,2011,"해당 번호로 가입된 유저가 없습니다."),
     ALREADY_FRIEND(false,2012,"이미 친구로 등록된 유저입니다."),
+    INVALID_USER_IDX(false,2013,"존재하지 않는 유저입니다."),
 
     // [POST] /users
     POST_USERS_EMPTY_EMAIL(false, 2015, "이메일을 입력해주세요."),

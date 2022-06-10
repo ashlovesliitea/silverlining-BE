@@ -131,6 +131,10 @@ public class UserService {
         return userDao.modifyInsurance(patchInsuranceReq);
     }
 
+    public int getUserByIdx(int user_idx){
+        return userDao.checkUserByIdx(user_idx);
+    }
+
     public int modifyDrive(PatchDriveReq patchDriveReq) {
         return userDao.modifyDrive(patchDriveReq);
     }

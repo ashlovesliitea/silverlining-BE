@@ -36,7 +36,11 @@ public class UserDao {
                     checkEmailParams);
 
     }
+    public int checkUserByIdx(int user_idx){
+        String checkUserIdxQuery="select exists(select * from user where user_idx=?)";
 
+        return this.jdbcTemplate.queryForObject(checkUserIdxQuery,int.class,user_idx);
+    }
     public int createUser(User user) {
         String createUserQuery="insert into user(user_idx,user_id,user_pw,user_name,user_birth,user_gender,user_phone,user_company_status,user_experience,user_drive_status," +
                 "user_siNm,user_sggNm,user_emdNm,user_streetNm,user_detailNm,user_lat,user_lng,user_insurance_status,user_guardian_phone,user_median_income,user_profile_img) " +
