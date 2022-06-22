@@ -1,0 +1,6 @@
+*.yml
+*.properties
+/.gradle
+/build
+/.idea
+/src/main/java/com/example/capstone/config/secret/Secret.java
