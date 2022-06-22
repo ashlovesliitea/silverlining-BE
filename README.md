@@ -1,7 +1,7 @@
-#Silverlining Project
-- Silverlining은 "희망" 이라는 뜻의 단어 silverlining에서 따온 이름으로, <br>
+# Silverlining Project
+- Silverlining은 "희망" 이라는 뜻의 단어 silverlining에서 따온 이름으로,
   최근 빠른 속도로 증가하고 있는 시니어 1인 가구의 자립을 돕기 위해 <br>
-  가장 실생활에 밀접하게 연계될 수 있는 네가지 키워드(일자리, 건강, 국가정책, 관계단절)를 선정하고,<br>
+  가장 실생활에 밀접하게 연계될 수 있는 네가지 키워드(일자리, 건강, 국가정책, 관계단절)를 선정하고,
   관련된 서비스들을 사용자 맞춤형으로 제공할 수 있도록 구현한 어플리케이션입니다.
 - 해당 Repository에서는 Silverlining 주요 REST API 50여개를 구현한 내용을 확인하실 수 있습니다.
     - 주요 기능
@@ -68,10 +68,10 @@
 
 
 
-###:point_down: 프로젝트에 대해 전반적인 정보가 더 궁금하시다면 하단 링크를 참고해주세요! <br>
+### :point_down: 프로젝트에 대해 전반적인 정보가 더 궁금하시다면 하단 링크를 참고해주세요! <br>
 - 프로젝트 최종 보고서 & 발표자료
   - 프로젝트 구현 동기, 요구사항, 역할 분담, 프론트엔드/백엔드/데이터 크롤링 파트 상세구현 및 고찰 등을 확인하실 수 있습니다.
   - Link1 : [최종 보고서 링크](https://docs.google.com/document/d/1ayuLWrQsmPCM-mrkjZgttW0uWZ1_-ErK/edit?usp=sharing&ouid=117173717945581994159&rtpof=true&sd=true)
   - Link2 : [발표자료 링크](https://www.miricanvas.com/v/1x4d73)
 - Application 사용 방법을 정리한 README 문서
-    -  [README](https://docs.google.com/document/d/17Qh7C_ieFNpOlDuZiuxv_mC0hYgzy6gg/edit?usp=sharing&ouid=117173717945581994159&rtpof=true&sd=true)
+    -  [README 링크](https://docs.google.com/document/d/17Qh7C_ieFNpOlDuZiuxv_mC0hYgzy6gg/edit?usp=sharing&ouid=117173717945581994159&rtpof=true&sd=true)
