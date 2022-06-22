@@ -67,8 +67,10 @@
  - https://pinnate-goldfish-74c.notion.site/d1d11ab2adac4b938c31c700e2b1bb4f
 
 
+<br>
 
 ### :point_down: 프로젝트에 대해 전반적인 정보가 더 궁금하시다면 하단 링크를 참고해주세요! <br>
+- 채팅 기능을 독립적으로 구현한 Repository는 [여기](https://github.com/ashlovesliitea/silverlining-chatapp) 에서 확인해주세요.
 - 프로젝트 최종 보고서 & 발표자료
   - 프로젝트 구현 동기, 요구사항, 역할 분담, 프론트엔드/백엔드/데이터 크롤링 파트 상세구현 및 고찰 등을 확인하실 수 있습니다.
   - Link1 : [최종 보고서 링크](https://docs.google.com/document/d/1ayuLWrQsmPCM-mrkjZgttW0uWZ1_-ErK/edit?usp=sharing&ouid=117173717945581994159&rtpof=true&sd=true)
